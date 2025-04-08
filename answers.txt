@@ -1,0 +1,44 @@
+1. Kwabena Adjei Omanhene-Gyimah
+
+2. Output from running sleep.c and stopping with CTRL-C:
+Sleeper's PID is: 43210
+Slept for 0 iterations!
+Slept for 1 iterations!
+Slept for 2 iterations!
+^C
+
+3. SIGINT value and comment from man 7 signal:
+SIGINT = 2  
+Comment: Interrupt from keyboard
+
+4. What happens to the sleeper process when you send SIGINT using kill:
+The sleeper process terminates immediately.
+
+5. Another signal sent and what happened:
+Signal: SIGSTOP  
+Result: The sleeper process paused and stopped printing output.
+
+6. What happens when you run call_sleeper.c and CTRL-C the sleeper:
+Only the sleeper process is terminated.  
+The caller process does not print its success message.
+
+7. Signal handler code in the caller to ignore SIGINT:
+#include <signal.h>
+#include <stdio.h>
+
+void handle_sigint(int signum) {
+    printf("SIGINT received, but ignoring it in parent!\n");
+}
+
+8. Output from running the modified caller program with signal handler:
+Forking sleeper...
+Waiting for sleeper 12345...
+Sleeper's PID is: 12345
+Slept for 0 iterations!
+Slept for 1 iterations!
+^C
+SIGINT received, but ignoring it in parent!
+Parent finished waiting and returned successfully!
+
+9. Another situation where signal handling might be useful:
+Handling SIGTERM in a server application to perform cleanup before shutting down gracefully.
